@@ -58,3 +58,48 @@ If you want to learn more about building native executables, please consult http
 Spring, the Quarkus way! Start your RESTful Web Services with a Spring Controller.
 
 [Related guide section...](https://quarkus.io/guides/spring-web#greetingcontroller)
+
+## Docker
+
+To create docker image, first of all execute
+```shell script
+quarkus extension add 'container-image-docker'
+```
+
+This should add following dependency to the pom.xml
+```xml
+    <dependency>
+      <groupId>io.quarkus</groupId>
+      <artifactId>quarkus-container-image-docker</artifactId>
+    </dependency>
+```
+
+Remember to actually build appliation with:
+```shell
+./mvnw package
+```
+
+Now it is possible to simply build docker images using provided Dockerfiles (in /src/main/docker) with:
+
+```shell
+docker buildx build -t green_digletto:latest -f ./src/main/docker/Dockerfile.jvm .
+```
+
+And then just run container with
+```shell
+docker run -d --name green_digletto -p 127.0.0.0:8080:8080 green_digletto:latest
+```
+
+Test if everything is right with simple curl:
+```shell
+curl 127.0.0.0:8080/greeting 
+Hello Spring%                                                
+```
+
+TODO: what builds when no file specified during building?
+TODO: other build engines?
+TODO: other containers?
+
+Sources:
+https://docs.docker.com/engine/reference/commandline/buildx/
+https://docs.docker.com/build/buildkit/
