@@ -96,6 +96,13 @@ curl 127.0.0.0:8080/greeting
 Hello Spring%                                                
 ```
 
+### Different types of images
+
+Quarkus project can be build either as default docker image or native image.
+Native image has pros of being smaller (since only part of JVM will be bundled in image), 
+and the con is not all features are available. Quarkus uses Graal VM by default. 
+This project will experiment with it 
+
 TODO: what builds when no file specified during building?
 TODO: other build engines?
 TODO: other containers?
