@@ -1,0 +1,49 @@
+workspace {
+
+    model {
+        client = person "User or Client/Library/API consumer"
+        softwareSystem = softwareSystem "Green Digletto" {
+
+                    idp = container "Identity Provider" {
+
+            }
+
+            green_digletto = container "Green Digletto" {
+                idp -> this "authentication/authorization"
+                client -> this "Uses"
+            }
+
+            documentation_diggleto = container "Doc Digletto" {
+                idp -> this "authentication/authorization"
+                green_digletto -> this "fetches details - who works/when/blog posts/etc"
+            }
+
+
+            container "Relational database" {
+                green_digletto -> this "Reads from and writes to"
+            }
+
+            container "NoSQL database" {
+                documentation_diggleto -> this "Reads from and writes to"
+            }
+
+
+        }
+    }
+
+    views {
+        systemContext softwareSystem {
+            include *
+            autolayout tb
+        }
+
+        container softwareSystem {
+            include *
+            autolayout tb
+            default
+        }
+
+        theme default
+    }
+
+}
